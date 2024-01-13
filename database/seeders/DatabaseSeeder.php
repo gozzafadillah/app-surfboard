@@ -7,6 +7,11 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    protected $model;
+    public function __construct()
+    {
+        $this->model = new \App\Models\User;
+    }
     /**
      * Seed the application's database.
      */
@@ -14,9 +19,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->model->create([
+            'nama' => 'Super Admin',
+            'email' => 'admin@surfboard.com',
+            'username' => 'admin',
+            'jabatan' => 'super_admin',
+            'jenis_kelamin' => null,
+            'password' => bcrypt('admin'),
+        ]);
     }
 }
