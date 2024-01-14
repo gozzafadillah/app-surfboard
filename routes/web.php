@@ -32,3 +32,7 @@ Route::get('/dashboard/penjadwalan', function () {
 Route::get('/dashboard/produksi', function () {
     return view('produksi.index');
 });
+
+Route::get('/dashboard/karyawan', function () {
+    return view('karyawan.index');
+});

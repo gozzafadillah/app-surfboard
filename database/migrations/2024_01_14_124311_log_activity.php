@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penjadwalans', function (Blueprint $table) {
+        Schema::create('log_activity', function (Blueprint $table) {
             $table->id();
+            $table->int("user_id");
+            $table->text("action");
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penjadwalans');
+        Schema::dropIfExists('log_activity');
     }
 };

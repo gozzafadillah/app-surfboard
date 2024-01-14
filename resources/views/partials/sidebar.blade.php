@@ -29,7 +29,7 @@
             </a>
             <div class="collapse" id="collapseKaryawan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="layout-static.html">List Karyawan</a>
+                    <a class="nav-link" href="/dashboard/karyawan">List Karyawan</a>
                 </nav>
             </div>
         </div>
