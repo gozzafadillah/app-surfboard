@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('p_produksi', function (Blueprint $table) {
             $table->id();
-            $table->int("jumlah_produksi")->default(0);
-            $table->int("estimasi_id");
-            $table->int("produksi_id");
+            $table->integer("jumlah_produksi")->default(0);
+            $table->integer("estimasi_id");
+            $table->integer("produksi_id");
+            $table->string("tipe_produksi");
             $table->date('tgl_produksi');
             $table->timestamps();
         });

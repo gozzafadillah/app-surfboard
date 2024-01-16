@@ -24,15 +24,33 @@
                                     <h3 class="text-center font-weight-light my-4">Login</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    @if ($errors->any())
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: '{{ $errors->first() }}',
+                                                    toast: true,
+                                                    position: 'top-end',
+                                                    showConfirmButton: false,
+                                                    timer: 5000,
+                                                    timerProgressBar: true,
+                                                });
+                                            });
+                                        </script>
+                                    @endif
+
+                                    <form method="POST" action="/login">
+                                        @csrf
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputEmail" type="email"
-                                                placeholder="name@example.com" />
+                                                placeholder="name@example.com" name="email" />
                                             <label for="inputEmail">Email</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password"
-                                                placeholder="Password" />
+                                            <input class="form-control" name="password" id="inputPassword"
+                                                type="password" placeholder="Password" />
                                             <label for="inputPassword">Password</label>
                                         </div>
                                         <div class="form-check mb-3">
@@ -43,7 +61,7 @@
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="password.html">Forgot Password?</a>
-                                            <a class="btn btn-primary" href="index.html">Login</a>
+                                            <button type="submit" class="btn btn-primary">Login</button>
                                         </div>
                                     </form>
                                 </div>
@@ -73,6 +91,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('../assets/js/scripts.js') }}"></script>
 </body>
 
