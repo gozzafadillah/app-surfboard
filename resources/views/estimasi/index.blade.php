@@ -7,17 +7,17 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4 mb-4">Produksi</h1>
+                    <h1 class="mt-4 mb-4">Estimasi Produksi</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
                             <div class="card"><a href="/dashboard/produksi/create" class="btn btn-primary">Tambah
-                                    Produksi</a></div>
+                                    Estimasi</a></div>
                         </div>
                     </div>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                            Data Estimasi Produksi
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -31,7 +31,6 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Name</th>
                                         <th>No</th>
                                         <th>Kode Produksi</th>
                                         <th>Model Produksi</th>
@@ -39,14 +38,12 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    @foreach ($produksi as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->kode_produksi }}</td>
-                                            <td>{{ $item->model_produk }}</td>
-                                            <td>{{ $item->created_at }}</td>
-                                        </tr>
-                                    @endforeach
+                                    {{-- dummy --}}
+                                    <tr>
+                                        <td>1</td>
+                                        <td>123</td>
+                                        <td>123</td>
+                                        <td>123</td>
                                 </tbody>
                             </table>
                         </div>

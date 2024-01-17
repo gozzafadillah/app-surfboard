@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Estimasi;
 use App\Http\Requests\StoreEstimasiRequest;
 use App\Http\Requests\UpdateEstimasiRequest;
+use App\Models\Produksi;
 
 class EstimasiController extends Controller
 {
@@ -13,7 +14,8 @@ class EstimasiController extends Controller
      */
     public function index()
     {
-        //
+        $estimasi = Estimasi::all();
+        return view('estimasi.index', compact('estimasi'));
     }
 
     /**
@@ -21,7 +23,10 @@ class EstimasiController extends Controller
      */
     public function create()
     {
-        //
+        Produksi::all();
+        return view('estimasi.create', [
+            'produksi' => Produksi::all(),
+        ]);
     }
 
     /**

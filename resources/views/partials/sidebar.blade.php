@@ -7,18 +7,16 @@
                 Dashboard
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePenjadwalan"
-                aria-expanded="false" aria-controls="collapsePenjadwalan">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProduk"
+                aria-expanded="false" aria-controls="collapseProduk">
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                Penjadwalan
+                Produksi
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
-            <div class="collapse" id="collapsePenjadwalan" aria-labelledby="headingOne"
-                data-bs-parent="#sidenavAccordion">
+            <div class="collapse" id="collapseProduk" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="/dashboard/penjadwalan">Jadwal Produksi</a>
                     <a class="nav-link" href="/dashboard/produksi">Produksi</a>
-                    <a class="nav-link" href="layout-sidenav-light.html">List Produksi</a>
+                    <a class="nav-link" href="/dashboard/estimasi">Estimasi Produksi</a>
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseKaryawan"
@@ -30,6 +28,20 @@
             <div class="collapse" id="collapseKaryawan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="/dashboard/karyawan">List Karyawan</a>
+                </nav>
+            </div>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLaporan"
+                aria-expanded="false" aria-controls="collapseLaporan">
+                <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                Laporan
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="#">Laporan Penjualan</a>
+                </nav>
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="#">Laporan Produksi</a>
                 </nav>
             </div>
         </div>
