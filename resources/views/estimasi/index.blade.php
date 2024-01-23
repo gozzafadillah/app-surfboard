@@ -10,7 +10,7 @@
                     <h1 class="mt-4 mb-4">Estimasi Produksi</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
-                            <div class="card"><a href="/dashboard/produksi/create" class="btn btn-primary">Tambah
+                            <div class="card"><a href="/dashboard/estimasi/create" class="btn btn-primary">Tambah
                                     Estimasi</a></div>
                         </div>
                     </div>
@@ -24,26 +24,50 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Kode Produksi</th>
                                         <th>Model Produksi</th>
-                                        <th>Create</th>
+                                        <th>Jumlah Produksi</th>
+                                        <th>Bulan Estimasi</th>
+                                        <th>action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>Kode Produksi</th>
                                         <th>Model Produksi</th>
-                                        <th>Create</th>
+                                        <th>Jumlah Produksi</th>
+                                        <th>Bulan Estimasi</th>
+                                        <th>action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     {{-- dummy --}}
                                     <tr>
                                         <td>1</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
+                                        <td>The Brunette</td>
+                                        <td>17</td>
+                                        <td>Januari, 2024</td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">view</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Mono Mono</td>
+                                        <td>17</td>
+                                        <td>Januari, 2024</td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">view</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Bon Voyage</td>
+                                        <td>17</td>
+                                        <td>Januari, 2024</td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">view</a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

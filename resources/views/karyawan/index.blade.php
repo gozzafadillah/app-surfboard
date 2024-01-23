@@ -39,17 +39,17 @@
                     </script>
                 @endif
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4 mb-4">List Karyawan</h1>
+                    <h1 class="mt-4 mb-4">List Pegawai</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
                             <div class="card"><a href="/dashboard/karyawan/create" class="btn btn-primary">Tambah
-                                    Karyawan</a></div>
+                                    Pegawai</a></div>
                         </div>
                     </div>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Data Karyawan
+                            Data Pegawai
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">

@@ -15,8 +15,8 @@
             </a>
             <div class="collapse" id="collapseProduk" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="/dashboard/produksi">Produksi</a>
                     <a class="nav-link" href="/dashboard/estimasi">Estimasi Produksi</a>
+                    <a class="nav-link" href="/dashboard/produksi">Produksi</a>
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseKaryawan"

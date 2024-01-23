@@ -7,11 +7,11 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4 mb-4">Produksi</h1>
+                    <h1 class="mt-4 mb-4">Estimasi</h1>
                     <div class="card mb-4">
 
                         <div class="card-header">
-                            Form Produksi
+                            Form Estimasi
                         </div>
                         <div class="card-body">
                             <form action="/dashboard/produksi/create" method="post">
@@ -26,7 +26,7 @@
                                         id="model_produk_id">
                                         <option selected>Model Produk</option>
                                         @foreach ($modelProduk as $item)
-                                            <option value="{{ $item->id }}">{{ $item->model . ' ' . $item->size }}
+                                            <option value="{{ $item->id }}">{{ $item->model }}
                                             </option>
                                         @endforeach
                                     </select>

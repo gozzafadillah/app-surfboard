@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('estimasi', function (Blueprint $table) {
             $table->id();
             $table->date('bulan_estimasi');
+            $table->interger('model_produk_id');
+            $table->interger('user_id');
             $table->timestamps();
         });
     }

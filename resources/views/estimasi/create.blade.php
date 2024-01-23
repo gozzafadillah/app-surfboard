@@ -7,30 +7,53 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4 mb-4">Estimasi Produksi</h1>
+                    <h1 class="mt-4 mb-4">Estimasi</h1>
                     <div class="card mb-4">
-
-                        <div class="card-header">
-                            Form Estimasi Produksi
+                        <div class="card-header" style="display:flex; justify-content: space-between">
+                            <p>Form Estimasi</p>
+                            <p>{{ $date }}</p>
                         </div>
                         <div class="card-body">
                             <form action="/dashboard/produksi/create" method="post">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="produksi_id" class="form-label">Produksi</label>
-                                    <select class="form-select" aria-label="Default select example" name="produksi_id"
-                                        id="produksi_id">
-                                        <option selected>Produksi</option>
-                                        @foreach ($produksi as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nama_produk }}</option>
+                                    <label for="model_produk_id" class="form-label">Model Produk</label>
+                                    <select class="form-select" aria-label="Default select example" name="model_produk_id"
+                                        id="model_produk_id">
+                                        <option selected>Model Produk</option>
+                                        @foreach ($modelProduk as $item)
+                                            <option value="{{ $item->id }}">{{ $item->model }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="model_produk" class="form-label">Model Produk</label>
-                                    <input type="text" class="form-control" id="model_produk" name="model_produk">
+                                    <label for="jumlah_produksi" class="form-label">Jumlah Produksi</label>
+                                    <input type="number" placeholder="0" class="form-control" id="jumlah_produksi"
+                                        name="jumlah_produksi">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <div class="mb-3">
+                                    <label for="bln_estimasi" class="form-label">Bulan Estimasi</label>
+                                    <select class="form-select" aria-label="Default select example" name="bln_estimasi"
+                                        id="bln_estimasi">
+                                        <option selected>Bulan Estimasi</option>
+                                        <option value="Januari">Januari</option>
+                                        <option value="Februari">Februari</option>
+                                        <option value="Maret">Maret</option>
+                                        <option value="April">April</option>
+                                        <option value="Mei">Mei</option>
+                                        <option value="Juni">Juni</option>
+                                        <option value="Juli">Juli</option>
+                                        <option value="Agustus">Agustus</option>
+                                        <option value="September">September</option>
+                                        <option value="Oktober">Oktober</option>
+                                        <option value="November">November</option>
+                                        <option value="Desember">Desember</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </form>
                         </div>
                     </div>

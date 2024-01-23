@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('model_produk', function (Blueprint $table) {
             $table->id();
             $table->string('model');
-            $table->string("size");
-            $table->integer("jumlah")->nullable();
-            $table->float("harga")->nullable();
+            $table->int('estimasi');
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kode_produksi');
             $table->string('model_produk');
             $table->date('tgl_produksi');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

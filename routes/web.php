@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EstimasiController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PenjadwalanController;
 use App\Http\Controllers\ProduksiController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,8 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard/produksi', [ProduksiController::class, 'index'])->name('produksi.index');
 Route::get('/dashboard/produksi/create', [ProduksiController::class, 'create'])->name('produksi.create');
 Route::post('/dashboard/produksi/create', [ProduksiController::class, 'store'])->name('produksi.store');
+
+Route::get("/dashboard/produksi/{idProduksi}/penjadwalan", [PenjadwalanController::class, 'index'])->name("penjadwalan.index");
 
 Route::get('/dashboard/estimasi', [EstimasiController::class, 'index'])->name('estimasi.index');
 Route::get('/dashboard/estimasi/create', [EstimasiController::class, 'create'])->name('estimasi.create');

@@ -7,24 +7,22 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4 mb-4">Produksi</h1>
+                    <h1 class="mt-4 mb-4">Penjadwalan</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
-                            <div class="card"><a href="#" class="btn btn-primary">Tambah
-                                    Produksi</a></div>
                         </div>
                     </div>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                            Penjadwalan Produksi Mono mono Bulan Januari 2024
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Model Produksi</th>
+                                        <th>Proses</th>
                                         <th>status </th>
                                         <th>tanggal selesai</th>
                                         <th>action</th>
@@ -33,7 +31,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>Model Produksi</th>
+                                        <th>Proses</th>
                                         <th>status </th>
                                         <th>tanggal selesai</th>
                                         <th>action</th>
@@ -42,29 +40,58 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>The Brunette</td>
+                                        <td>Layer</td>
                                         <td>process</td>
-                                        <td>Januari, 2024</td>
                                         <td>
-                                            <a href="/dashboard/produksi/1/penjadwalan" class="btn btn-success">view</a>
+                                            <p class="badge bg-success">Senin, 23 Januari 2024</p>
+                                        </td>
+                                        <td>
+                                            <a href="#" @disabled(true)
+                                                class="btn btn-success disabled">Selesai</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td>Mono Mono</td>
+                                        <td>Pole Frame </td>
                                         <td>process</td>
-                                        <td>Januari, 2024</td>
                                         <td>
-                                            <a href="/dashboard/produksi/2/penjadwalan" class="btn btn-success">view</a>
+                                            <p class="badge bg-danger light">Belum Selesai</p>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">Selesai</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td>Bon Voyage</td>
+                                        <td>Press Body</td>
                                         <td>process</td>
-                                        <td>Januari, 2024</td>
                                         <td>
-                                            <a href="/dashboard/produksi/2/penjadwalan" class="btn btn-success">view</a>
+                                            <p class="badge bg-danger light">Belum Selesai</p>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">Selesai</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Press Full</td>
+                                        <td>process</td>
+                                        <td>
+                                            <p class="badge bg-danger light">Belum Selesai</p>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">Selesai</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Finishing</td>
+                                        <td>process</td>
+                                        <td>
+                                            <p class="badge bg-danger light">Belum Selesai</p>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">Selesai</a>
                                         </td>
                                     </tr>
                                 </tbody>
