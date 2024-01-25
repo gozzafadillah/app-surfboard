@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->model->create([
             'nama' => 'Super Admin',
             'email' => 'admin@surfboard.com',
-            'username' => 'admin',
             'jabatan' => 'super_admin',
             'jenis_kelamin' => null,
             'password' => bcrypt('admin'),

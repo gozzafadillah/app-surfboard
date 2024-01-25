@@ -22,7 +22,7 @@
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseKaryawan"
                 aria-expanded="false" aria-controls="collapseKaryawan">
                 <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
-                Karyawan
+                Pegawai
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
             <div class="collapse" id="collapseKaryawan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -38,10 +38,7 @@
             </a>
             <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="#">Laporan Penjualan</a>
-                </nav>
-                <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="#">Laporan Produksi</a>
+                    <a class="nav-link" href="/dashboard/laporan-produksi">Laporan Produksi</a>
                 </nav>
             </div>
         </div>

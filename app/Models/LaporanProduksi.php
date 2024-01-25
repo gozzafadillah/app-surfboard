@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ModelProduk extends Model
+class LaporanProduksi extends Model
 {
     use HasFactory;
 
-    protected $table = 'model_produk';
+    protected $table = 'laporan_produksi';
     protected $guarded = ['id'];
-
-    public function estimasi()
-    {
-        return $this->hasMany(Estimasi::class);
-    }
 }

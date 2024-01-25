@@ -33,41 +33,7 @@ class ProduksiController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $request->validate([
-                'model_produk_id' => 'required',
-                'produksi' => 'required',
-                'tgl_produksi' => 'required',
-                'jumlah_produksi' => 'required|numeric',
-            ]);
-
-            $kode = $this->makeKode($request->produksi);
-
-            $produksi = Produksi::create([
-                'model_produk_id' => $request->model_produk_id,
-                'produksi' => $request->produksi,
-                'kode_produksi' => $kode,
-            ]);
-
-            Estimasi::create([
-                'kode_produksi' => $kode,
-                'model_produksi' => $request->produksi,
-                'bulan_estimasi' => $request->tgl_produksi,
-            ]);
-
-            P_Produksi::create([
-                'kode_produksi' => $kode,
-                'tgl_produksi' => $request->tgl_produksi,
-                'jumlah_produksi' => $request->jumlah_produksi,
-                'produksi_id' => $produksi->id,
-                'estimasi_id' => $produksi->id,
-            ]);
-
-
-            return redirect()->route('produksi.index')->with('success', 'Data berhasil ditambahkan');
-        } catch (\Throwable $th) {
-            return redirect()->route('produksi.index')->with('error', 'Data gagal ditambahkan');
-        }
+        //    implement
     }
 
     public function scheduleProduction($productions)

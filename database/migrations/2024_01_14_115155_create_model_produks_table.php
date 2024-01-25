@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('model_produk', function (Blueprint $table) {
             $table->id();
             $table->string('model');
-            $table->int('estimasi');
+            $table->integer('estimasi');
             $table->timestamps();
         });
     }

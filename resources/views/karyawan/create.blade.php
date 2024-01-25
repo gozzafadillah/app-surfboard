@@ -7,11 +7,11 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4 mb-4">Karyawan</h1>
+                    <h1 class="mt-4 mb-4">Pegawai</h1>
                     <div class="card mb-4">
 
                         <div class="card-header">
-                            Form Karyawan
+                            Form Pegawai
                         </div>
                         <div class="card-body">
                             <form action="/dashboard/karyawan/create" method="post">

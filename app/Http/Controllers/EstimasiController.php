@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Estimasi;
 use App\Http\Requests\StoreEstimasiRequest;
 use App\Http\Requests\UpdateEstimasiRequest;
+use App\Models\DetailProduksi;
 use App\Models\ModelProduk;
 use App\Models\Produksi;
 use Illuminate\Http\Request;
@@ -25,59 +26,9 @@ class EstimasiController extends Controller
      */
     public function create()
     {
-        // get year and month from date
-        $year = date('Y');
-        $month = date('m');
-        if ($month == 12) {
-            $month = 1;
-            $year++;
-        } else {
-            $month++;
-        }
-        // change to month name
-        switch ($month) {
-            case 1:
-                $month = 'Januari';
-                break;
-            case 2:
-                $month = 'Februari';
-                break;
-            case 3:
-                $month = 'Maret';
-                break;
-            case 4:
-                $month = 'April';
-                break;
-            case 5:
-                $month = 'Mei';
-                break;
-            case 6:
-                $month = 'Juni';
-                break;
-            case 7:
-                $month = 'Juli';
-                break;
-            case 8:
-                $month = 'Agustus';
-                break;
-            case 9:
-                $month = 'September';
-                break;
-            case 10:
-                $month = 'Oktober';
-                break;
-            case 11:
-                $month = 'November';
-                break;
-            case 12:
-                $month = 'Desember';
-                break;
-        }
-        $date = $month . ', ' . $year;
         $modelProduk = ModelProduk::all();
         return view('estimasi.create', [
             'modelProduk' => $modelProduk,
-            'date' => $date
         ]);
     }
 
@@ -86,7 +37,72 @@ class EstimasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataEstimasi = Estimasi::where('model_produk_id', $request->model_produk_id)->get();
+        if ($dataEstimasi->count() < 4) {
+            $estimasi = Estimasi::create([
+                'model_produk_id' => $request->model_produk_id,
+                'jumlah' => $request->jumlah,
+                "user_id" => auth()->user()->id,
+                'bulan_estimasi' => $request->bln_estimasi,
+            ]);
+            Produksi::create([
+                'model_produk' => $estimasi->modelProduk->model,
+                'bulan_produksi' => $request->bln_estimasi,
+                'estimasi_id' => $estimasi->id,
+                'status' => 0,
+            ]);
+            return redirect()->route('estimasi.index');
+        }
+        // sistem single moving average
+        $estimasi = Estimasi::where('model_produk_id', $request->model_produk_id)->get();
+        // ambil data 3 bulan terakhir tapi bertambah dihitung dengan bulan yang dipilih dan ambil data 3 bulan terbaru 
+        // ex : jika bulan dipilih bulan juni maka diambil bulan april mei
+        $estimasi = $estimasi->where('bulan_estimasi', '<', $request->bln_estimasi)->sortByDesc('bulan_estimasi')->take(3);
+
+        $singleMovingAvg = $this->singleMovingAvg($estimasi->pluck('jumlah')->toArray(), $estimasi->count());
+        // pembulatan ke atas
+        $singleMovingAvg = ceil($singleMovingAvg);
+
+        $estimasi = Estimasi::create([
+            'model_produk_id' => $request->model_produk_id,
+            'jumlah' => $singleMovingAvg,
+            "user_id" => auth()->user()->id,
+            'bulan_estimasi' => $request->bln_estimasi,
+        ]);
+        return redirect()->route('estimasi.index');
+    }
+
+    public function singleMovingAvgJSON(Request $request)
+    {
+        // sistem single moving average
+        $estimasi = Estimasi::where('model_produk_id', $request->model_produk_id)->get();
+        // ambil data 3 bulan terakhir tapi bertambah dihitung dengan bulan yang dipilih dan ambil data 3 bulan terbaru 
+        // ex : jika bulan dipilih bulan juni maka diambil bulan april mei
+        $estimasi = $estimasi->where('bulan_estimasi', '<', $request->bln_estimasi)->sortByDesc('bulan_estimasi')->take(3);
+
+        $singleMovingAvg = $this->singleMovingAvg($estimasi->pluck('jumlah')->toArray(), $estimasi->count());
+        // pembulatan ke atas
+        $singleMovingAvg = ceil($singleMovingAvg);
+
+        $estimasi = Estimasi::create([
+            'model_produk_id' => $request->model_produk_id,
+            'jumlah' => $singleMovingAvg,
+            "user_id" => auth()->user()->id,
+            'bulan_estimasi' => $request->bln_estimasi,
+        ]);
+
+        return response()->json([
+            'jumlah' => $singleMovingAvg,
+        ]);
+    }
+
+    private function singleMovingAvg($data, $n)
+    {
+        $sum = 0;
+        for ($i = 0; $i < $n; $i++) {
+            $sum += $data[$i];
+        }
+        return $sum / $n;
     }
 
     /**

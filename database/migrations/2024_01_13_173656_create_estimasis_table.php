@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('estimasi', function (Blueprint $table) {
             $table->id();
             $table->date('bulan_estimasi');
-            $table->interger('model_produk_id');
-            $table->interger('user_id');
+            $table->integer('model_produk_id');
+            $table->integer('user_id');
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estimasis');
+        Schema::dropIfExists('estimasi');
     }
 };

@@ -11,4 +11,8 @@ class Estimasi extends Model
 
     protected $table = 'estimasi';
     protected $guarded = ['id'];
+    public function modelProduk()
+    {
+        return $this->belongsTo(ModelProduk::class);
+    }
 }

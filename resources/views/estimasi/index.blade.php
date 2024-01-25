@@ -41,33 +41,25 @@
                                 </tfoot>
                                 <tbody>
                                     {{-- dummy --}}
-                                    <tr>
-                                        <td>1</td>
-                                        <td>The Brunette</td>
-                                        <td>17</td>
-                                        <td>Januari, 2024</td>
-                                        <td>
-                                            <a href="#" class="btn btn-success">view</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Mono Mono</td>
-                                        <td>17</td>
-                                        <td>Januari, 2024</td>
-                                        <td>
-                                            <a href="#" class="btn btn-success">view</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Bon Voyage</td>
-                                        <td>17</td>
-                                        <td>Januari, 2024</td>
-                                        <td>
-                                            <a href="#" class="btn btn-success">view</a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($estimasi as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->modelProduk->model }}</td>
+                                            <td>{{ $item->jumlah }}</td>
+                                            <td>{{ $item->bulan_estimasi }}</td>
+                                            <td>
+                                                <a href="/dashboard/estimasi/{{ $item->id }}/edit"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="/dashboard/estimasi/{{ $item->id }}" method="post"
+                                                    class="d-inline">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Yakin ingin menghapus data?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

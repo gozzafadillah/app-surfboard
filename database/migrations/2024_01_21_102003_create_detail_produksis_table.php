@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('detail_produksi', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('jumlah_produksi');
-            $table->integer('id_estimasi');
+            $table->integer('estimasi_id');
             $table->integer('produksi_id');
+            $table->integer("penjadwalan_id");
             $table->timestamps();
         });
     }

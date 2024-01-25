@@ -10,8 +10,8 @@
                     <h1 class="mt-4 mb-4">Produksi</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
-                            <div class="card"><a href="#" class="btn btn-primary">Tambah
-                                    Produksi</a></div>
+                            <div class="card"><a href="#" class="btn btn-primary">Generate Jadwal
+                                </a></div>
                         </div>
                     </div>
                     <div class="card mb-4">
@@ -40,33 +40,20 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>The Brunette</td>
-                                        <td>process</td>
-                                        <td>Januari, 2024</td>
-                                        <td>
-                                            <a href="/dashboard/produksi/1/penjadwalan" class="btn btn-success">view</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Mono Mono</td>
-                                        <td>process</td>
-                                        <td>Januari, 2024</td>
-                                        <td>
-                                            <a href="/dashboard/produksi/2/penjadwalan" class="btn btn-success">view</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Bon Voyage</td>
-                                        <td>process</td>
-                                        <td>Januari, 2024</td>
-                                        <td>
-                                            <a href="/dashboard/produksi/2/penjadwalan" class="btn btn-success">view</a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($produksi as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->model_produk }}</td>
+                                            <td>{{ $item->status }}</td>
+                                            <td>{{ $item->tanggal_selesai == '' ? 'Belum ada jadwal' : $item->tanggal_selesai }}
+                                            </td>
+                                            <td>
+                                                {!! $item->tanggal_selesai == ''
+                                                    ? '<a href="#" class="btn btn-primary disabled">View</a>'
+                                                    : '<a href="#" class="btn btn-primary">View</a>' !!}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
