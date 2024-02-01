@@ -10,7 +10,7 @@
                     <h1 class="mt-4 mb-4">Laporan Produksi</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
-                            <div class="card"><a href="#" class="btn btn-success">Generate Excel
+                            <div class="card"><a href="#" class="btn btn-success">Export Excel
                                 </a></div>
                         </div>
                     </div>

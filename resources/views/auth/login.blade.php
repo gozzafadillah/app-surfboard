@@ -12,61 +12,75 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-primary">
-    <div id="layoutAuthentication">
+<body class="bg-success">
+    <div id="layoutAuthentication" class="py-5">
         <div id="layoutAuthentication_content">
             <main>
                 <div class="container">
+                    <!-- Outer Row -->
                     <div class="row justify-content-center">
-                        <div class="col-lg-5">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4">Login</h3>
-                                </div>
-                                <div class="card-body">
-                                    @if ($errors->any())
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Oops...',
-                                                    text: '{{ $errors->first() }}',
-                                                    toast: true,
-                                                    position: 'top-end',
-                                                    showConfirmButton: false,
-                                                    timer: 5000,
-                                                    timerProgressBar: true,
-                                                });
-                                            });
-                                        </script>
-                                    @endif
+                        <div class="col-xl-10 col-lg-12 col-md-9">
+                            <div class="card o-hidden border-0 shadow-lg my-5">
+                                <div class="card-body p-0">
+                                    <!-- Nested Row within Card Body -->
+                                    <div class="row">
+                                        <div class="col-lg-6 d-flex"
+                                            style="background: url('{{ asset('../assets/img/logo-app-surfboard.png') }}') no-repeat center center;">
+                                            <!-- This div will have the background image and will stretch to cover the half of the row -->
+                                        </div>
 
-                                    <form method="POST" action="/login">
-                                        @csrf
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="email"
-                                                placeholder="name@example.com" name="email" />
-                                            <label for="inputEmail">Email</label>
+
+                                        <div class="col-lg-6">
+                                            <div class="p-5">
+                                                <div class="text-center">
+                                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                                </div>
+                                                @if ($errors->any())
+                                                    <script>
+                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: '{{ $errors->first() }}',
+                                                                toast: true,
+                                                                position: 'top-end',
+                                                                showConfirmButton: false,
+                                                                timer: 5000,
+                                                                timerProgressBar: true,
+                                                            });
+                                                        });
+                                                    </script>
+                                                @endif
+                                                <form class="user" method="POST" action="/login">
+                                                    @csrf
+                                                    <div class="form-group mb-3">
+                                                        <input type="email" class="form-control form-control-user"
+                                                            id="inputEmail" aria-describedby="emailHelp"
+                                                            placeholder="Enter Email Address..." name="email">
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <input type="password" class="form-control form-control-user"
+                                                            id="inputPassword" placeholder="Password" name="password">
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <div class="custom-control custom-checkbox small">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customCheck">
+                                                            <label class="custom-control-label"
+                                                                for="customCheck">Remember Me</label>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                                        Login
+                                                    </button>
+                                                </form>
+                                                <hr>
+                                                <div class="text-center">
+                                                    <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" name="password" id="inputPassword"
-                                                type="password" placeholder="Password" />
-                                            <label for="inputPassword">Password</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" id="inputRememberPassword" type="checkbox"
-                                                value="" />
-                                            <label class="form-check-label" for="inputRememberPassword">Remember
-                                                Password</label>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="password.html">Forgot Password?</a>
-                                            <button type="submit" class="btn btn-primary">Login</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="/register">Need an account? Sign up!</a></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -74,20 +88,7 @@
                 </div>
             </main>
         </div>
-        <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>

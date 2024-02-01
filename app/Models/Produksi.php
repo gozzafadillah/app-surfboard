@@ -11,4 +11,24 @@ class Produksi extends Model
 
     protected $table = 'produksi';
     protected $guarded = ['id'];
+
+    public function modelProduk()
+    {
+        return $this->belongsTo(ModelProduk::class, 'model_produk_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function detailProduksi()
+    {
+        return $this->hasMany(DetailProduksi::class, 'produksi_id', 'id');
+    }
+
+    public function estimasi()
+    {
+        return $this->hasOne(Estimasi::class, 'id', 'estimasi_id');
+    }
 }

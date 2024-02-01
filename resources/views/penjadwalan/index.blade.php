@@ -24,8 +24,7 @@
                                         <th>No</th>
                                         <th>Proses</th>
                                         <th>status </th>
-                                        <th>tanggal selesai</th>
-                                        <th>action</th>
+                                        <th>tanggal proses</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -33,67 +32,22 @@
                                         <th>No</th>
                                         <th>Proses</th>
                                         <th>status </th>
-                                        <th>tanggal selesai</th>
-                                        <th>action</th>
+                                        <th>tanggal proses</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Layer</td>
-                                        <td>process</td>
-                                        <td>
-                                            <p class="badge bg-success">Senin, 23 Januari 2024</p>
-                                        </td>
-                                        <td>
-                                            <a href="#" @disabled(true)
-                                                class="btn btn-success disabled">Selesai</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Pole Frame </td>
-                                        <td>process</td>
-                                        <td>
-                                            <p class="badge bg-danger light">Belum Selesai</p>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-success">Selesai</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Press Body</td>
-                                        <td>process</td>
-                                        <td>
-                                            <p class="badge bg-danger light">Belum Selesai</p>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-success">Selesai</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Press Full</td>
-                                        <td>process</td>
-                                        <td>
-                                            <p class="badge bg-danger light">Belum Selesai</p>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-success">Selesai</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Finishing</td>
-                                        <td>process</td>
-                                        <td>
-                                            <p class="badge bg-danger light">Belum Selesai</p>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-success">Selesai</a>
-                                        </td>
-                                    </tr>
+                                    {{-- proses dulu --}}
+                                    @foreach ($data['proses'] as $proses)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $proses->proses }}</td>
+                                            <td>proses</td>
+                                            @foreach ($data['jadwal'] as $item)
+                                                {{-- jika id proses sama dengan id proses di jadwal --}}
+                                                <td>{{ $item['start'] }}</td>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

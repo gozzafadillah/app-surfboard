@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailProduksi;
 use App\Models\Produksi;
-use App\Models\Estimasi;
 use App\Models\ModelProduk;
-use App\Models\P_Produksi;
 use Illuminate\Http\Request;
 
 class ProduksiController extends Controller
@@ -15,7 +14,7 @@ class ProduksiController extends Controller
      */
     public function index()
     {
-        $produksi = Produksi::all();
+        $produksi = Produksi::with('estimasi')->get();
         return view('produksi.index', compact('produksi'));
     }
 

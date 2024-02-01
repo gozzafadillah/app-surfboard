@@ -16,4 +16,9 @@ class ModelProduk extends Model
     {
         return $this->hasMany(Estimasi::class);
     }
+
+    public function proses()
+    {
+        return $this->hasMany(Proses::class, 'model_id', 'id');
+    }
 }

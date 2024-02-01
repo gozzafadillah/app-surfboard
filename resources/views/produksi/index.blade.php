@@ -10,7 +10,8 @@
                     <h1 class="mt-4 mb-4">Produksi</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
-                            <div class="card"><a href="#" class="btn btn-primary">Generate Jadwal
+                            <div class="card"><a href="/dashboard/produksi/generateJadwal" class="btn btn-primary">Generate
+                                    Jadwal
                                 </a></div>
                         </div>
                     </div>
@@ -26,6 +27,7 @@
                                         <th>No</th>
                                         <th>Model Produksi</th>
                                         <th>status </th>
+                                        <th>tanggal estimasi</th>
                                         <th>tanggal selesai</th>
                                         <th>action</th>
                                     </tr>
@@ -35,6 +37,7 @@
                                         <th>No</th>
                                         <th>Model Produksi</th>
                                         <th>status </th>
+                                        <th>tanggal estimasi</th>
                                         <th>tanggal selesai</th>
                                         <th>action</th>
                                     </tr>
@@ -45,12 +48,17 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->model_produk }}</td>
                                             <td>{{ $item->status }}</td>
-                                            <td>{{ $item->tanggal_selesai == '' ? 'Belum ada jadwal' : $item->tanggal_selesai }}
+                                            <td>{{ $item->estimasi->bulan_estimasi }}</td>
+                                            <td>{{ $item->tanggal_selesai == '' ? 'Belum Selesai' : $item->produksi->tanggal_selesai }}
                                             </td>
                                             <td>
-                                                {!! $item->tanggal_selesai == ''
-                                                    ? '<a href="#" class="btn btn-primary disabled">View</a>'
-                                                    : '<a href="#" class="btn btn-primary">View</a>' !!}
+                                                @if ($item->status == 'selesai')
+                                                    <a href="/dashboard/penjadwalan/{{ $item->estimasi->id }}/detail"
+                                                        class="btn btn-primary">Detail</a>
+                                                @else
+                                                    <a href="/dashboard/penjadwalan/{{ $item->estimasi->id }}"
+                                                        class="btn btn-primary">Show</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

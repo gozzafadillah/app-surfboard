@@ -17,7 +17,7 @@ class EstimasiController extends Controller
      */
     public function index()
     {
-        $estimasi = Estimasi::all();
+        $estimasi = Estimasi::latest()->get();
         return view('estimasi.index', compact('estimasi'));
     }
 
@@ -37,71 +37,51 @@ class EstimasiController extends Controller
      */
     public function store(Request $request)
     {
-        $dataEstimasi = Estimasi::where('model_produk_id', $request->model_produk_id)->get();
-        if ($dataEstimasi->count() < 4) {
-            $estimasi = Estimasi::create([
-                'model_produk_id' => $request->model_produk_id,
-                'jumlah' => $request->jumlah,
-                "user_id" => auth()->user()->id,
-                'bulan_estimasi' => $request->bln_estimasi,
-            ]);
-            Produksi::create([
-                'model_produk' => $estimasi->modelProduk->model,
-                'bulan_produksi' => $request->bln_estimasi,
-                'estimasi_id' => $estimasi->id,
-                'status' => 0,
-            ]);
-            return redirect()->route('estimasi.index');
-        }
-        // sistem single moving average
-        $estimasi = Estimasi::where('model_produk_id', $request->model_produk_id)->get();
-        // ambil data 3 bulan terakhir tapi bertambah dihitung dengan bulan yang dipilih dan ambil data 3 bulan terbaru 
-        // ex : jika bulan dipilih bulan juni maka diambil bulan april mei
-        $estimasi = $estimasi->where('bulan_estimasi', '<', $request->bln_estimasi)->sortByDesc('bulan_estimasi')->take(3);
-
-        $singleMovingAvg = $this->singleMovingAvg($estimasi->pluck('jumlah')->toArray(), $estimasi->count());
-        // pembulatan ke atas
-        $singleMovingAvg = ceil($singleMovingAvg);
-
         $estimasi = Estimasi::create([
             'model_produk_id' => $request->model_produk_id,
-            'jumlah' => $singleMovingAvg,
+            'jumlah' => $request->jumlah,
             "user_id" => auth()->user()->id,
             'bulan_estimasi' => $request->bln_estimasi,
+            'rasio' => $request->rasio,
+        ]);
+        Produksi::create([
+            'model_produk' => $estimasi->modelProduk->model,
+            'bulan_produksi' => $request->bln_estimasi,
+            'estimasi_id' => $estimasi->id,
+            'status' => 0,
         ]);
         return redirect()->route('estimasi.index');
     }
 
-    public function singleMovingAvgJSON(Request $request)
+    public function singleMovingAvgJSON($model_produk_id, $bln_estimasi)
     {
-        // sistem single moving average
-        $estimasi = Estimasi::where('model_produk_id', $request->model_produk_id)->get();
-        // ambil data 3 bulan terakhir tapi bertambah dihitung dengan bulan yang dipilih dan ambil data 3 bulan terbaru 
-        // ex : jika bulan dipilih bulan juni maka diambil bulan april mei
-        $estimasi = $estimasi->where('bulan_estimasi', '<', $request->bln_estimasi)->sortByDesc('bulan_estimasi')->take(3);
+        // Inisialisasi nilai SMA awal
+        $singleMovingAvg = 0;
 
-        $singleMovingAvg = $this->singleMovingAvg($estimasi->pluck('jumlah')->toArray(), $estimasi->count());
-        // pembulatan ke atas
-        $singleMovingAvg = ceil($singleMovingAvg);
 
-        $estimasi = Estimasi::create([
-            'model_produk_id' => $request->model_produk_id,
-            'jumlah' => $singleMovingAvg,
-            "user_id" => auth()->user()->id,
-            'bulan_estimasi' => $request->bln_estimasi,
-        ]);
+        // Mengambil data estimasi
+        $estimasi = Estimasi::where('model_produk_id', $model_produk_id)
+            ->where('bulan_estimasi', '<', $bln_estimasi)
+            ->orderBy('bulan_estimasi', 'desc')
+            ->take(4)
+            ->get();
+
+        // Periksa apakah data cukup untuk menghitung SMA (minimal 3 data bulan sebelumnya)
+        if ($estimasi->count() == 4) {
+            // Hitung SMA
+            $singleMovingAvg = $this->singleMovingAvg($estimasi->pluck('jumlah')->toArray(), 4);
+            // Pembulatan ke atas
+        }
 
         return response()->json([
-            'jumlah' => $singleMovingAvg,
+            'jumlah' =>  ceil($singleMovingAvg),
+            'rasio' => $singleMovingAvg,
         ]);
     }
 
     private function singleMovingAvg($data, $n)
     {
-        $sum = 0;
-        for ($i = 0; $i < $n; $i++) {
-            $sum += $data[$i];
-        }
+        $sum = array_sum($data);
         return $sum / $n;
     }
 
@@ -132,8 +112,13 @@ class EstimasiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Estimasi $estimasi)
+    public function destroy($id)
     {
-        //
+        try {
+            $response = Estimasi::destroy($id);
+            return view('estimasi.index')->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return view('estimasi.index')->with('error', "Data gagal dihapus, $th");
+        }
     }
 }

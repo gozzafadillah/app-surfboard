@@ -6,6 +6,8 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\PenjadwalanController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\UsersController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,19 +35,24 @@ Route::get('/dashboard', function () {
     return view('halaman_utama.index');
 })->middleware('auth');
 
+Route::get('/dashboard/profile', [UsersController::class, 'profile']);
+
 
 Route::get('/dashboard/produksi', [ProduksiController::class, 'index'])->name('produksi.index');
 Route::get('/dashboard/produksi/create', [ProduksiController::class, 'create'])->name('produksi.create');
 Route::post('/dashboard/produksi/create', [ProduksiController::class, 'store'])->name('produksi.store');
 
-Route::get("/dashboard/produksi/{idProduksi}/penjadwalan", [PenjadwalanController::class, 'index'])->name("penjadwalan.index");
+Route::get("/dashboard/penjadwalan/{idEstimasi}", [PenjadwalanController::class, 'getPenjadwalan']);
+
+Route::get("/dashboard/produksi/generateJadwal", [PenjadwalanController::class, 'generateProductionSchedule']);
 
 Route::get('/dashboard/estimasi', [EstimasiController::class, 'index'])->name('estimasi.index');
 Route::get('/dashboard/estimasi/create', [EstimasiController::class, 'create'])->name('estimasi.create');
 Route::post('/dashboard/estimasi/create', [EstimasiController::class, 'store'])->name('estimasi.store');
+Route::get('/dashboard/estimasi/prediksi/{model_produk_id}/{bln_estimasi}', [EstimasiController::class, 'singleMovingAvgJSON']);
 
-Route::get('/dashboard/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
-Route::get('/dashboard/karyawan/create', [KaryawanController::class, 'createKaryawan'])->name('karyawan.create');
-Route::post('/dashboard/karyawan/create', [KaryawanController::class, 'storeKaryawan'])->name('karyawan.store');
+Route::get('/dashboard/pegawai', [KaryawanController::class, 'index'])->name('karyawan.index');
+Route::get('/dashboard/pegawai/create', [KaryawanController::class, 'createKaryawan'])->name('karyawan.create');
+Route::post('/dashboard/pegawai/create', [KaryawanController::class, 'storeKaryawan'])->name('karyawan.store');
 
 Route::get('/dashboard/laporan-produksi', [LaporanProduksiController::class, 'index'])->name('laporan.index');
