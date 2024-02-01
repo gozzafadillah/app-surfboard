@@ -9,15 +9,18 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4 mb-4">Dashboard</h1>
                     <div class="row justify-content-center">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Pegawai</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="/dashboard/pegawai">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        @if (Auth::user()->role == '3' || Auth::user()->role == '0' || Auth::user()->role == '4')
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Pegawai</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/dashboard/pegawai">View
+                                            Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
                                 <div class="card-body">Estimasi</div>

@@ -14,7 +14,7 @@
                             Form Pegawai
                         </div>
                         <div class="card-body">
-                            <form action="/dashboard/karyawan/create" method="post">
+                            <form action="/dashboard/pegawai/create" method="post">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="nama" class="form-label">Nama Lengkap</label>

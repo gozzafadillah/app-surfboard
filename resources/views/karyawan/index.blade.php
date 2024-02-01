@@ -42,7 +42,7 @@
                     <h1 class="mt-4 mb-4">List Pegawai</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
-                            <div class="card"><a href="/dashboard/karyawan/create" class="btn btn-primary">Tambah
+                            <div class="card"><a href="/dashboard/pegawai/create" class="btn btn-primary">Tambah
                                     Pegawai</a></div>
                         </div>
                     </div>
