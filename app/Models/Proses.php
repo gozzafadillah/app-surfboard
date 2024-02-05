@@ -10,4 +10,9 @@ class Proses extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function modelProduk()
+    {
+        return $this->belongsTo(ModelProduk::class, 'model_id', 'id');
+    }
 }

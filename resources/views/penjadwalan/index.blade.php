@@ -7,6 +7,9 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
+                    {{-- tombol kembali --}}
+                    <a href="/dashboard/produksi" class="btn btn-primary mt-4">Kembali</a>
+                    {{-- judul halaman --}}
                     <h1 class="mt-4 mb-4">Penjadwalan</h1>
                     <div class="row my-4 justify-content-end">
                         <div class="col-md-3">
@@ -15,7 +18,7 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Penjadwalan Produksi Mono mono Bulan Januari 2024
+                            Penjadwalan Produksi Mono mono tanggal {{ $tanggal }}
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -25,6 +28,7 @@
                                         <th>Proses</th>
                                         <th>status </th>
                                         <th>tanggal proses</th>
+                                        <th>action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -33,19 +37,20 @@
                                         <th>Proses</th>
                                         <th>status </th>
                                         <th>tanggal proses</th>
+                                        <th>action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    {{-- proses dulu --}}
-                                    @foreach ($data['proses'] as $proses)
+                                    @foreach ($jadwal as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $proses->proses }}</td>
-                                            <td>proses</td>
-                                            @foreach ($data['jadwal'] as $item)
-                                                {{-- jika id proses sama dengan id proses di jadwal --}}
-                                                <td>{{ $item['start'] }}</td>
-                                            @endforeach
+                                            <td>{{ $item['proses'] }}</td>
+                                            <td>{{ $item['status'] }}</td>
+                                            <td>{{ $item['start'] . ' - ' . $item['end'] }} WIB</td>
+                                            <td>
+                                                <a href="/selesai/{{ $item['estimasi_id'] }}"
+                                                    class="btn btn-warning btn-sm">Selesai</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
