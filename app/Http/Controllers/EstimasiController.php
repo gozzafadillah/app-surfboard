@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateEstimasiRequest;
 use App\Models\DetailProduksi;
 use App\Models\ModelProduk;
 use App\Models\Produksi;
+use DateTime;
 use Illuminate\Http\Request;
 
 class EstimasiController extends Controller
@@ -37,11 +38,12 @@ class EstimasiController extends Controller
      */
     public function store(Request $request)
     {
+        $bln_estimasi = new DateTime($request->bln_estimasi);
         $estimasi = Estimasi::create([
             'model_produk_id' => $request->model_produk_id,
             'jumlah' => $request->jumlah,
             "user_id" => auth()->user()->id,
-            'bulan_estimasi' => $request->bln_estimasi,
+            'bulan_estimasi' => $bln_estimasi->format('F Y'),
             'rasio' => $request->rasio,
         ]);
         Produksi::create([
@@ -57,11 +59,12 @@ class EstimasiController extends Controller
     {
         // Inisialisasi nilai SMA awal
         $singleMovingAvg = 0;
+        $bln_estimasi = new DateTime($bln_estimasi);
 
 
         // Mengambil data estimasi
         $estimasi = Estimasi::where('model_produk_id', $model_produk_id)
-            ->where('bulan_estimasi', '<', $bln_estimasi)
+            ->where('bulan_estimasi', '<', $bln_estimasi->format('F Y'))
             ->orderBy('bulan_estimasi', 'desc')
             ->take(4)
             ->get();
@@ -96,17 +99,33 @@ class EstimasiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Estimasi $estimasi)
+    public function edit($id)
     {
-        //
+        $modelProduk = ModelProduk::all();
+        $estimasi = Estimasi::find($id);
+        return view('estimasi.edit', [
+            'estimasi' => $estimasi,
+            'modelProduk' => $modelProduk,
+            'id' => $id,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEstimasiRequest $request, Estimasi $estimasi)
+    public function update(Request $request, $id)
     {
-        //
+        $estimasi = Estimasi::find($id);
+        if ($estimasi != null) {
+            // edit estimasi
+            $bln_estimasi = new DateTime($request->bln_estimasi);
+            $estimasi->jumlah = $request->jumlah;
+            $estimasi->bulan_estimasi = $bln_estimasi->format('F Y');
+            $estimasi->update();
+        } else {
+            return view('estimasi.index')->with('error', 'Data tidak ditemukan');
+        }
+        return redirect()->route('estimasi.index');
     }
 
     /**
@@ -114,11 +133,16 @@ class EstimasiController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $response = Estimasi::destroy($id);
-            return view('estimasi.index')->with('success', 'Data berhasil dihapus');
-        } catch (\Throwable $th) {
-            return view('estimasi.index')->with('error', "Data gagal dihapus, $th");
+        $estimasi = Estimasi::find($id);
+        if ($estimasi != null) {
+            $estimasi->delete();
+            $findProduksi = Produksi::where('estimasi_id', $id)->first();
+            if ($findProduksi != null) {
+                $findProduksi->delete();
+            }
+        } else {
+            return view('estimasi.index')->with('error', 'Data tidak ditemukan');
         }
+        return redirect()->route('estimasi.index');
     }
 }

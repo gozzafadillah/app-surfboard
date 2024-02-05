@@ -45,10 +45,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item['proses'] }}</td>
-                                            <td>{{ $item['status'] }}</td>
+                                            <td>{{ $item['status']->penjadwalan->status == 1 ? 'Selesai' : 'Proses' }}</td>
                                             <td>{{ $item['start'] . ' - ' . $item['end'] }} WIB</td>
                                             <td>
-                                                <a href="/selesai/{{ $item['estimasi_id'] }}"
+                                                <a href="/dashboard/penjadwalan/{{ $item['status']->penjadwalan->uuid }}/status"
                                                     class="btn btn-warning btn-sm">Selesai</a>
                                             </td>
                                         </tr>

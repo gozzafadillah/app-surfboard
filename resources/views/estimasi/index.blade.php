@@ -48,9 +48,9 @@
                                             <td>{{ $item->jumlah }}</td>
                                             <td>{{ $item->bulan_estimasi }}</td>
                                             <td>
-                                                <a href="/dashboard/estimasi/{{ $item->id }}/edit"
+                                                <a href="/dashboard/estimasi/{{ $item->id }}"
                                                     class="btn btn-warning">Edit</a>
-                                                <form action="/dashboard/estimasi/{{ $item->id }}" method="post"
+                                                <form action="/dashboard/estimasi/{{ $item->id }}/delete" method="post"
                                                     class="d-inline">
                                                     @method('delete')
                                                     @csrf

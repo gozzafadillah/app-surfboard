@@ -43,6 +43,7 @@ Route::get('/dashboard/produksi/create', [ProduksiController::class, 'create'])-
 Route::post('/dashboard/produksi/create', [ProduksiController::class, 'store'])->name('produksi.store');
 
 Route::get("/dashboard/penjadwalan/{idEstimasi}", [PenjadwalanController::class, 'getPenjadwalan']);
+Route::get("/dashboard/penjadwalan/{id}/status", [PenjadwalanController::class, 'changeStatusProduksi']);
 
 Route::get("/dashboard/produksi/generateJadwal", [PenjadwalanController::class, 'generateProductionSchedule']);
 
@@ -50,9 +51,13 @@ Route::get('/dashboard/estimasi', [EstimasiController::class, 'index'])->name('e
 Route::get('/dashboard/estimasi/create', [EstimasiController::class, 'create'])->name('estimasi.create');
 Route::post('/dashboard/estimasi/create', [EstimasiController::class, 'store'])->name('estimasi.store');
 Route::get('/dashboard/estimasi/prediksi/{model_produk_id}/{bln_estimasi}', [EstimasiController::class, 'singleMovingAvgJSON']);
+Route::get('/dashboard/estimasi/{id}', [EstimasiController::class, 'edit'])->name('estimasi.edit');
+Route::put('/dashboard/estimasi/{id}/edit', [EstimasiController::class, 'update']);
+Route::delete('/dashboard/estimasi/{id}/delete', [EstimasiController::class, 'destroy']);
 
 Route::get('/dashboard/pegawai', [KaryawanController::class, 'index'])->name('karyawan.index');
 Route::get('/dashboard/pegawai/create', [KaryawanController::class, 'createKaryawan'])->name('karyawan.create');
 Route::post('/dashboard/pegawai/create', [KaryawanController::class, 'storeKaryawan'])->name('karyawan.store');
+
 
 Route::get('/dashboard/laporan-produksi', [LaporanProduksiController::class, 'index'])->name('laporan.index');

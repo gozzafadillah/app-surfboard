@@ -9,6 +9,12 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4 mb-4">Produksi</h1>
                     <div class="row my-4 justify-content-end">
+                        {{-- notif success --}}
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="col-md-3">
                             <div class="card"><a href="/dashboard/produksi/generateJadwal" class="btn btn-primary">Generate
                                     Jadwal
@@ -18,7 +24,7 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                            Data Produksi
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">

@@ -88,8 +88,7 @@ class PenjadwalanController extends Controller
                 }
             }
         }
-
-        return response()->json($schedule);
+        return  redirect()->route('produksi.index')->with('success', 'Penjadwalan berhasil dibuat');
     }
 
     public function getPenjadwalan($idEstimasi = null)
@@ -134,21 +133,35 @@ class PenjadwalanController extends Controller
             }
             $start = new DateTime($jadwalItem->jadwal_start);
             $end = new DateTime($jadwalItem->jadwal_end);
+            $detail_produksi = DetailProduksi::where('id', $penjadwalan->estimasi_id)->first();
 
 
             $jadwal[] = [
                 'proses' => $proses['proses'], // Assuming 'proses' is the correct field name
-                'status' => 'dijadwalkan',
                 'start' => $start->format('H:i'),
                 'end' => $end->format('H:i'),
                 'action' => 'Tentukan Action',
                 'estimasi_id' => $penjadwalan->estimasi_id,
+                'status' => $detail_produksi,
             ];
         }
         return  view('penjadwalan.index', [
             'jadwal' => $jadwal,
             'tanggal' => $start->format('F, d Y'),
         ]);
+    }
+
+    public function changeStatusProduksi($id)
+    {
+        $penjadwalan = ModelsPenjadwalan::where('uuid', $id)->first();
+        //  cek apakah ada
+        if ($penjadwalan == null) {
+            return  redirect()->route('produksi.index')->with('error', 'Penjadwalan tidak ditemukan');
+        }
+        // update status
+        $penjadwalan->status = 1;
+        // redirect ke halaman sebellumnnya
+        return  redirect()->route('produksi.index')->with('success', 'Penjadwalan berubah berhasil dibuat');
     }
 
     private function generateUUID()
