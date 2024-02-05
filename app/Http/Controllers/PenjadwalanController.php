@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\DetailProduksi;
 use App\Models\Estimasi;
 use App\Models\ModelProduk;
-use App\Models\penjadwalan;
 use App\Models\Penjadwalan as ModelsPenjadwalan;
 use App\Models\Produksi;
 use App\Models\Proses;
 use DateTime;
-use Illuminate\Http\Request;
 
 class PenjadwalanController extends Controller
 {
@@ -74,6 +72,7 @@ class PenjadwalanController extends Controller
                         ModelsPenjadwalan::create([
                             'uuid' => $uuid,
                             'estimasi_id' => $sma->id,
+                            'proses_id' => $proses->id,
                             'jadwal_start' => $currentProcessStart->format('Y-m-d H:i'),
                             'jadwal_end' => $endTime->format('Y-m-d H:i'),
                         ]);
@@ -95,48 +94,60 @@ class PenjadwalanController extends Controller
 
     public function getPenjadwalan($idEstimasi = null)
     {
-        //    ambil tanggal hari ini
-        $today = date('Y-m-d');
-        //    ambil data detail_produksi
+        // ambil tanggal estimasi table
+        $estimasi = Estimasi::where('id', $idEstimasi)->first();
+        // mulai pada tanggal estimasi dan diawal bulan tanggal 1
+        $today = new DateTime($estimasi->bulan_estimasi);
+        $today->modify('first day of this month');
+        $today = $today->format('Y-m-d');
+
+        // ambil data penjadwalan berdasarkan estimasi_id
         $penjadwalan = DetailProduksi::where('estimasi_id', $idEstimasi)
-            ->with(['estimasi' => function ($query) {
-                $query->with('modelProduk');
+            ->with(['estimasi.modelProduk.proses' => function ($query) {
+                $query->orderByRaw("FIELD(proses, 'layer', 'pole frame', 'press body', 'press full', 'finishing')");
             }])
             ->first();
-        //    ambil data proses
-        $proses = Proses::where('model_id', $penjadwalan->estimasi->model_produk_id)
-            ->orderByRaw("FIELD(proses, 'layer', 'pole frame', 'press body', 'press full', 'finishing')")
-            ->get();
-        //    ambil data penjadwalan untuk hari ini
-        $penjadwalanHariIni = ModelsPenjadwalan::where('jadwal_start', 'like', "%{$today}%")
-            ->where('estimasi_id', $penjadwalan->estimasi_id)->with('estimasi')
-            ->get();
 
-        foreach ($penjadwalanHariIni as $jadwalHariIni) {
-            // Asumsikan bahwa 'proses' adalah relasi yang sudah terurut sesuai dengan proses pengerjaan
-            // dan kita ingin menampilkan nama dari setiap proses dalam jadwal.
-            $prosesList = $jadwalHariIni->estimasi->modelProduk->proses->map(function ($proses) {
-                return $proses->nama; // Ganti 'nama' dengan nama kolom yang menyimpan nama proses
-            })->implode(', ');
 
-            $jadwal[] = [
-                'start' => $jadwalHariIni->jadwal_start,
-                'end' => $jadwalHariIni->jadwal_end,
-                'proses' => $prosesList,
-            ];
+        // Jika tidak ada penjadwalan atau proses, kembali ke view dengan pesan error
+        if (is_null($penjadwalan) || is_null($penjadwalan->estimasi->modelProduk->proses)) {
+            // kirim pesan error ke view
+            return view('penjadwalan.index', ['error' => 'Tidak ada penjadwalan atau proses ditemukan.']);
         }
 
+        $penjadwalanHariIni = ModelsPenjadwalan::where('jadwal_start', 'like', "%{$today}%")
+            ->where('estimasi_id', $idEstimasi)
+            ->get();
+
+        $prosesRecords = $penjadwalan->estimasi->modelProduk->proses;
+
+        $jadwal = [];
+        foreach ($prosesRecords as $proses) {
+            $jadwalItem = $penjadwalanHariIni->first(function ($item) use ($proses) {
+
+                return $item->proses_id == $proses['id'];
+            });
+
+            if (!$jadwalItem) {
+                // Log or handle the error that no jadwalItem was found for this proses
+                continue;
+            }
+            $start = new DateTime($jadwalItem->jadwal_start);
+            $end = new DateTime($jadwalItem->jadwal_end);
 
 
-        $data = [
-            'penjadwalan' => $penjadwalan,
-            'proses' => $proses,
-            'jadwal' => $jadwal
-        ];
-
-
-        return view('penjadwalan.index', [
-            'data' => $data
+            $jadwal[] = [
+                'proses' => $proses['proses'], // Assuming 'proses' is the correct field name
+                'status' => 'dijadwalkan',
+                'start' => $start->format('H:i'),
+                'end' => $end->format('H:i'),
+                'action' => 'Tentukan Action',
+                'estimasi_id' => $penjadwalan->estimasi_id,
+            ];
+        }
+        return  view('penjadwalan.index', [
+            'jadwal' => $jadwal,
+            'tanggal' => $start->format('F, d Y'),
         ]);
     }
 
